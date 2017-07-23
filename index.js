@@ -18,30 +18,28 @@ function addToCart(item) {
 }
 
 function viewCart() {
-  let strings = []
-  let itemNames = cart.map( item => Object.keys(item) )
-  let itemPrices = cart.map( price => Object.values(price) )
-  let string = "In your cart, you have "
-  if(cart.length === 0) {
-    console.log('Your shopping cart is empty.')
-  } else if (cart.length === 1) {
-    console.log(`In your cart, you have ${itemNames[0]} at $${itemPrices[0]}.`)
-  } else if (cart.length === 2) {
-    itemNames.forEach(function(item, idx){
-      strings.push(`${item} at $${itemPrices[idx]}`)
-    })
-    let almostString = string.concat(strings.join(" and "))
-    let finalString = almostString.concat(".")
-    console.log(finalString);
-  } else {
-    itemNames.forEach(function(item, idx){
-      strings.push(`${item} at $${itemPrices[idx]}`)
-    })
-    let lastItem = strings.pop();
-    let mostItems = strings.join(", ")
-    let finalString = string.concat(mostItems).concat(", and ").concat(lastItem).concat(".")
-    console.log(finalString);
-  }
+
+    var last = cart[cart.length -1];
+    var i = 0;
+    str = `In your cart, you have `
+
+    if(cart.length === 0) {
+      console.log('Your shopping cart is empty.');
+    } else if (cart.length === 1) {
+      console.log(`In your cart, you have ${Object.keys(cart[0])[0]} at $${Object.values(cart[0])[0]}.`);
+    }else{
+      for(i = 0; i < cart.length - 1; i++){
+        var key = Object.keys(cart[i])[0]
+        var val = Object.values(cart[i])[0]
+        if(cart.length > 2){
+          str += `${key} at $${val}, `
+        }else {
+          str += `${key} at $${val} `
+        }
+      }
+      str += `and ${Object.keys(last)[0]} at $${Object.values(last)[0]}.`
+      console.log(str)
+   }
 }
 
 function total() {
