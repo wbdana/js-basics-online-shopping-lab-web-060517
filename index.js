@@ -18,31 +18,63 @@ function addToCart(item) {
 }
 
 function viewCart() {
-  var last = cart[cart.length -1];
-  var i = 0;
-  if(parseInt(cart.length) === 0) {
-    console.log('Your shopping cart is empty.')
-  } else if (parseInt(cart.length) === 1) {
-    console.log(`In your cart, you have ${cart[0][0]} at $${cart[0][1]}.`)
-  } else {
-    var str = "In your cart, you have "
-    for (i; i < parseInt(cart.length) - 2; i++) {
-      str.push(`${cart[i][0]} at $${cart[i][1]}, `)
-    }
-    str.push(`and ${last[0]} at $${last[1]}.`)
-    console.log(str)
-  }
+
+    var last = cart[cart.length -1];
+    var i = 0;
+    str = `In your cart, you have `
+
+    if(cart.length === 0) {
+      console.log('Your shopping cart is empty.');
+    } else if (cart.length === 1) {
+      console.log(`In your cart, you have ${Object.keys(cart[0])[0]} at $${Object.values(cart[0])[0]}.`);
+    }else{
+      for(i = 0; i < cart.length - 1; i++){
+        var key = Object.keys(cart[i])[0]
+        var val = Object.values(cart[i])[0]
+        if(cart.length > 2){
+          str += `${key} at $${val}, `
+        }else {
+          str += `${key} at $${val} `
+        }
+      }
+      str += `and ${Object.keys(last)[0]} at $${Object.values(last)[0]}.`
+      console.log(str)
+   }
 }
+  // `In your cart, you have orange at $${orangeCost}, pear at $${pearCost}, and quince at $${quinceCost}.`
 
 
 function total() {
   // write your code here
+  let total = 0
+  for(i = 0; i < cart.length; i++){
+    total += Object.values(cart[i])[0]
+  }
+  return total
 }
 
 function removeFromCart(item) {
   // write your code here
+  var temp = Object.assign({}, cart);
+  for(i = 0; i < cart.length; i++){
+    if(Object.keys(cart[i])[0] === item){
+      delete cart[i]
+      cart = cart.filter(function(e){return e});
+    }
+  }
+  if(temp !== cart){
+      console.log("That item is not in your cart.")
+  }
+
 }
 
 function placeOrder(cardNumber) {
   // write your code here
+  let cartTotal = total()
+  if(typeof(cardNumber) !== 'undefined'){
+    console.log(`Your total cost is $${cartTotal}, which will be charged to the card ${cardNumber}.`)
+  }else {
+    console.log("Sorry, we don't have a credit card on file for you.")
+  }
+  cart = []
 }
